@@ -10,99 +10,100 @@ import com.cavazos.JSONFile;
 
 public class App {
 
-   private static JSONArray commandArray;
+    private static JSONArray commandArray;
 
-   
+    // Displays the Menu
+    public static void printMenu() {
+        System.out.println("----------------------------------------------------------");
+        System.out.println("General Cavazos Commander App");
+        System.out.println("----------------------------------------------------------");
+        printMenuCommand('i', "Issue a command");
+        printMenuCommand('l', "List all of the commands");
+        printMenuCommand('u', "Undo the last Command");
+        printMenuCommand('r', "Redo the last command");
+        printMenuCommand('q', "QUIT");
+        System.out.println("----------------------------------------------------------");
+    }
 
-   //Displays the Menu
-   public static void printMenu(){
-    System.out.println("----------------------------------------------------------");
-    System.out.println("General Cavazos Commander App");
-    System.out.println("----------------------------------------------------------");
-    printMenuCommand('i', "Issue a command");
-    printMenuCommand('l', "List all of the commands");
-    printMenuCommand('u', "Undo the last Command");
-    printMenuCommand('r', "Redo the last command");
-    printMenuCommand('q',"QUIT");
-    System.out.println("----------------------------------------------------------");
-
-   }
-
-   public static void printMenuCommand(Character command, String desc) {
+    public static void printMenuCommand(Character command, String desc) {
         System.out.printf("%s\t%s\n", command, desc);
     }
 
-    public static char menuGetCommand(Scanner scanner){
+    public static char menuGetCommand(Scanner scanner) {
         String input = scanner.nextLine().toLowerCase();
-        if(!input.isEmpty()){
+        if (!input.isEmpty()) {
             return input.charAt(0);
         }
         return '_';
     }
 
-    public static void issueCommad(Stack<String> commandStack){
-        Random rand = new Random();
-        int randIndex = rand.nextInt(commandArray.size());
-        String randomCommand = commandArray.get(randIndex).toString();
-        commandStack.push(randomCommand);
-        System.out.println("Issued command: " + randomCommand);
+    public static void issueCommand(Stack<String> commandStack) {
+        if (commandArray != null && commandArray.size() > 0) {
+            Random rand = new Random();
+            int randIndex = rand.nextInt(commandArray.size());
+            String randomCommand = commandArray.get(randIndex).toString();
+            commandStack.push(randomCommand);
+            System.out.println("Issued command: " + randomCommand);
+        } else {
+            System.out.println("No commands available.");
+        }
     }
 
-    public static void listALLCommands(String[] commandArray, int numCommand){
-        System.out.println("----- List of all commands -----");
-        System.out.println();
-        Random rand = new Random();
-    System.out.printf("Number\tCommand\n");
-    System.out.printf("------\t---------------\n");
-    for (int i = 0; i < numCommand; i++) {
-      int randIndex = rand.nextInt(commandArray.length);
-      System.out.printf("%04d\t%s\n", i, commandArray[randIndex]);
-    }
+    public static void listAllCommands() {
+        if (commandArray != null && commandArray.size() > 0) {
+            System.out.println("----- List of all commands -----");
+            for (int i = 0; i < commandArray.size(); i++) {
+                System.out.println((i + 1) + ". " + commandArray.get(i));
+            }
+        } else {
+            System.out.println("No commands available.");
+        }
     }
 
-    public static void undoCommand(Stack<String> commandStack, Stack<String> redoStack){
-        if (!commandStack.isEmpty()){
+    public static void undoCommand(Stack<String> commandStack, Stack<String> redoStack) {
+        if (!commandStack.isEmpty()) {
             String undoneCommand = commandStack.pop();
             redoStack.push(undoneCommand);
             System.out.println("Undone Command: " + undoneCommand);
-            }else {
-                System.out.println("No command to undo.");
-            }
+        } else {
+            System.out.println("No command to undo.");
         }
+    }
 
-    public static void redoCommand(Stack<String> commandStack, Stack<String> redoStack){
-        if (!redoStack.isEmpty()){
+    public static void redoCommand(Stack<String> commandStack, Stack<String> redoStack) {
+        if (!redoStack.isEmpty()) {
             String redoneCommand = redoStack.pop();
             commandStack.push(redoneCommand);
             System.out.println("Redone Command: " + redoneCommand);
         } else {
-            System.out.println("No commands to redo."); 
+            System.out.println("No commands to redo.");
         }
     }
-    
-     public static void main(String[] args){
-    
-        String fileName = "/Users/jerom/Documents/GitHub/class-java/general-cavazos/undoredo/src/main/java/com/cavazos/commands.json";
+
+    public static void main(String[] args) {
+
+        String fileName = "/Users/bryanherz/Documents/GitHub/class-java/general-cavazos/undoredo/src/main/java/com/cavazos/commands.json";
         commandArray = JSONFile.readArray(fileName);
-    
+        
+
         Stack<String> commandStack = new Stack<String>();
         Stack<String> redoStack = new Stack<String>();
         Scanner scanner = new Scanner(System.in);
 
         Character command = '_';
 
-        while (command != 'q'){
-         printMenu();
+        while (command != 'q') {
+            printMenu();
             System.out.print("Enter a command: ");
             System.out.println();
             command = menuGetCommand(scanner);
 
-            switch (command){
+            switch (command) {
                 case 'i':
-                    issueCommad(commandStack);
+                    issueCommand(commandStack);
                     break;
                 case 'l':
-                     listALLCommands(args, 0);
+                    listAllCommands();
                     break;
                 case 'u':
                     undoCommand(commandStack, redoStack);
@@ -111,18 +112,13 @@ public class App {
                     redoCommand(commandStack, redoStack);
                     break;
                 case 'q':
-                    if (command == 'q'){
                     System.out.println("Goodbye:)");
-                 }
-                break;
-            default:
-                System.out.println("Invalid Command. Please Try again");
-                
-            
+                    break;
+                default:
+                    System.out.println("Invalid Command. Please Try again");
+            }
         }
-    }
         scanner.close();
-  }
-
-
+    }
 }
+
