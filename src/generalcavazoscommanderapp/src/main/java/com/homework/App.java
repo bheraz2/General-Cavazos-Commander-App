@@ -35,9 +35,33 @@ public class App {
     Character command = '_';
 
     while (command != 'q'){
-        
-    }
+        printMenu();
+        System.out.print("Enter a command");
+        command = menuGetCommand(scanner);
 
+        switch (command){
+            case 'i':
+                //
+                break;
+            case 'l':
+                //
+                break;
+            case 'u':
+                //
+                break;
+            case 'r':
+                //
+                break;
+            case 'q':
+            
+                break;
+            default:
+                System.out.println("Invalid Command. Please Try again");
+
+            
+        }
+    }
+        scanner.close();
   }
 
 
