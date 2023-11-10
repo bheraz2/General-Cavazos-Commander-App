@@ -10,7 +10,9 @@ import com.cavazos.JSONFile;
 
 public class App {
 
-   private static JSONArray commandJSONArray;
+   private static JSONArray commandArray;
+
+   
 
    //Displays the Menu
    public static void printMenu(){
@@ -19,10 +21,11 @@ public class App {
     System.out.println("----------------------------------------------------------");
     printMenuCommand('i', "Issue a command");
     printMenuCommand('l', "List all of the commands");
-    printMenuCommand('u', "Undeo the last Command");
+    printMenuCommand('u', "Undo the last Command");
     printMenuCommand('r', "Redo the last command");
     printMenuCommand('q',"QUIT");
     System.out.println("----------------------------------------------------------");
+
    }
 
    public static void printMenuCommand(Character command, String desc) {
@@ -39,15 +42,22 @@ public class App {
 
     public static void issueCommad(Stack<String> commandStack){
         Random rand = new Random();
-        int randIndex = rand.nextInt(commandJSONArray.size());
-        String randomCommand = commandJSONArray.get(randIndex).toString();
+        int randIndex = rand.nextInt(commandArray.size());
+        String randomCommand = commandArray.get(randIndex).toString();
         commandStack.push(randomCommand);
         System.out.println("Issued command: " + randomCommand);
     }
 
-    public static void listALLCommands(){
+    public static void listALLCommands(String[] commandArray, int numCommand){
         System.out.println("----- List of all commands -----");
-        System.out.println(commandJSONArray);
+        System.out.println();
+        Random rand = new Random();
+    System.out.printf("Number\tCommand\n");
+    System.out.printf("------\t---------------\n");
+    for (int i = 0; i < numCommand; i++) {
+      int randIndex = rand.nextInt(commandArray.length);
+      System.out.printf("%04d\t%s\n", i, commandArray[randIndex]);
+    }
     }
 
     public static void undoCommand(Stack<String> commandStack, Stack<String> redoStack){
@@ -59,11 +69,21 @@ public class App {
                 System.out.println("No command to undo.");
             }
         }
+
+    public static void redoCommand(Stack<String> commandStack, Stack<String> redoStack){
+        if (!redoStack.isEmpty()){
+            String redoneCommand = redoStack.pop();
+            commandStack.push(redoneCommand);
+            System.out.println("Redone Command: " + redoneCommand);
+        } else {
+            System.out.println("No commands to redo."); 
+        }
+    }
     
      public static void main(String[] args){
     
         String fileName = "/Users/jerom/Documents/GitHub/class-java/general-cavazos/undoredo/src/main/java/com/cavazos/commands.json";
-        commandJSONArray = JSONFile.readArray(fileName);
+        commandArray = JSONFile.readArray(fileName);
     
         Stack<String> commandStack = new Stack<String>();
         Stack<String> redoStack = new Stack<String>();
@@ -74,6 +94,7 @@ public class App {
         while (command != 'q'){
          printMenu();
             System.out.print("Enter a command: ");
+            System.out.println();
             command = menuGetCommand(scanner);
 
             switch (command){
@@ -81,20 +102,22 @@ public class App {
                     issueCommad(commandStack);
                     break;
                 case 'l':
-                     listALLCommands();
+                     listALLCommands(args, 0);
                     break;
                 case 'u':
                     undoCommand(commandStack, redoStack);
                     break;
                 case 'r':
-                    //
+                    redoCommand(commandStack, redoStack);
                     break;
                 case 'q':
-            
+                    if (command == 'q'){
+                    System.out.println("Goodbye:)");
+                 }
                 break;
             default:
                 System.out.println("Invalid Command. Please Try again");
-
+                
             
         }
     }
