@@ -1,5 +1,4 @@
-
-
+package com.homework;
 import java.util.Random;
 import org.json.simple.*;
 
