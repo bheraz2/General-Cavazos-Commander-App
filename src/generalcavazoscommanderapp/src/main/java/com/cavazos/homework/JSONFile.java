@@ -1,4 +1,4 @@
-package com.cavazos;
+package com.cavazos.homework;
 
 import java.io.*;
 import org.json.simple.*;

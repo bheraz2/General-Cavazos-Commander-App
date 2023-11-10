@@ -1,4 +1,4 @@
-package com.homework;
+package com.cavazos.homework;
 import java.util.Random;
 import org.json.simple.*;
 

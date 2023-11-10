@@ -1,12 +1,10 @@
-package com.homework;
+package com.cavazos.homework;
 
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Stack;
 
 import org.json.simple.JSONArray;
-
-import com.cavazos.JSONFile;
 
 public class App {
 
@@ -39,6 +37,7 @@ public class App {
 
     public static void issueCommand(Stack<String> commandStack) {
         if (commandArray != null && commandArray.size() > 0) {
+            System.out.println("Number of commands available: " + commandArray.size());
             Random rand = new Random();
             int randIndex = rand.nextInt(commandArray.size());
             String randomCommand = commandArray.get(randIndex).toString();
@@ -48,6 +47,7 @@ public class App {
             System.out.println("No commands available.");
         }
     }
+    
 
     public static void listAllCommands() {
         if (commandArray != null && commandArray.size() > 0) {
@@ -82,7 +82,9 @@ public class App {
 
     public static void main(String[] args) {
 
-        String fileName = "/Users/bryanherz/Documents/GitHub/class-java/general-cavazos/undoredo/src/main/java/com/cavazos/commands.json";
+        
+        String fileName = "/Users/bryanheraz/Documents/GitHub/General-Cavazos-Commander-App/src/generalcavazoscommanderapp/src/main/java/com/cavazos/homework/commands.json";
+        
         commandArray = JSONFile.readArray(fileName);
         
 
