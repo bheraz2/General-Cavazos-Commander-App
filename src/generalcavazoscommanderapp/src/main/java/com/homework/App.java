@@ -12,9 +12,10 @@ public class App {
 
    private static JSONArray commandJSONArray;
 
+   //Displays the Menu
    public static void printMenu(){
     System.out.println("----------------------------------------------------------");
-    System.out.println("General Cavazos COmmander App");
+    System.out.println("General Cavazos Commander App");
     System.out.println("----------------------------------------------------------");
     printMenuCommand('i', "Issue a command");
     printMenuCommand('l', "List all of the commands");
@@ -36,43 +37,48 @@ public class App {
         return '_';
     }
 
-    public static void issuseCommad(Stack<String> commandStack){
+    public static void issueCommad(Stack<String> commandStack){
         Random rand = new Random();
         int randIndex = rand.nextInt(commandJSONArray.size());
         String randomCommand = commandJSONArray.get(randIndex).toString();
         commandStack.push(randomCommand);
         System.out.println("Issued command: " + randomCommand);
     }
-  public static void main(String[] args){
+
+    public static void listALLCommands(){
+        System.out.println("----- List of all commands -----");
+        System.out.println(commandJSONArray);
+    }
+     public static void main(String[] args){
     
-    String fileName = "/Users/jerom/Documents/GitHub/class-java/general-cavazos/undoredo/src/main/java/com/cavazos/commands.json";
-    commandJSONArray = JSONFile.readArray(fileName);
+        String fileName = "/Users/jerom/Documents/GitHub/class-java/general-cavazos/undoredo/src/main/java/com/cavazos/commands.json";
+        commandJSONArray = JSONFile.readArray(fileName);
     
-    Stack<String> commandStack = new Stack<String>();
-    Stack<String> redoStack = new Stack<String>();
-    Scanner scanner = new Scanner(System.in);
+        Stack<String> commandStack = new Stack<String>();
+        Stack<String> redoStack = new Stack<String>();
+        Scanner scanner = new Scanner(System.in);
 
-    Character command = '_';
+        Character command = '_';
 
-    while (command != 'q'){
-        printMenu();
-        System.out.print("Enter a command");
-        command = menuGetCommand(scanner);
+        while (command != 'q'){
+         printMenu();
+            System.out.print("Enter a command");
+            command = menuGetCommand(scanner);
 
-        switch (command){
-            case 'i':
-                //
-                break;
-            case 'l':
-                //
-                break;
-            case 'u':
-                //
-                break;
-            case 'r':
-                //
-                break;
-            case 'q':
+            switch (command){
+                case 'i':
+                    issueCommad(commandStack);
+                    break;
+                case 'l':
+                     //
+                    break;
+                case 'u':
+                    //
+                    break;
+                case 'r':
+                    //
+                    break;
+                case 'q':
             
                 break;
             default:
