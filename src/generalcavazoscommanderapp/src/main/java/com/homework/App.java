@@ -1,13 +1,16 @@
 package com.homework;
 
+import java.util.Random;
 import java.util.Scanner;
 import java.util.Stack;
 
-import com.google.gson.JsonArray;
+import org.json.simple.JSONArray;
+
+import com.cavazos.JSONFile;
 
 public class App {
 
-   private static JsonArray commandJSONArray;
+   private static JSONArray commandJSONArray;
 
    public static void printMenu(){
     System.out.println("----------------------------------------------------------");
@@ -25,6 +28,21 @@ public class App {
         System.out.printf("%s\t%s\n", command, desc);
     }
 
+    public static char menuGetCommand(Scanner scamner){
+        String input = scanner.nextLine().toLowerCase();
+        if(!input.isEmpty()){
+            return input.charAt(0);
+        }
+        return '_';
+    }
+
+    public static void issuseCommad(Stack<String> commandStack){
+        Random rand = new Random();
+        int randIndex = rand.nextInt(commandJSONArray.size());
+        String randomCommand = commandJSONArray.get(randIndex).toString();
+        commandStack.push(randomCommand);
+        System.out.println("Issued command: " + randomCommand);
+    }
   public static void main(String[] args){
     
     String fileName = "/Users/jerom/Documents/GitHub/class-java/general-cavazos/undoredo/src/main/java/com/cavazos/commands.json";
