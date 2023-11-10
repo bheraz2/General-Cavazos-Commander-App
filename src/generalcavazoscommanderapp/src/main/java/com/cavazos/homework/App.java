@@ -35,6 +35,7 @@ public class App {
         return '_';
     }
 
+    //issue a random command
     public static void issueCommand(Stack<String> commandStack) {
         if (commandArray != null && commandArray.size() > 0) {
             System.out.println("Number of commands available: " + commandArray.size());
@@ -42,13 +43,15 @@ public class App {
             int randIndex = rand.nextInt(commandArray.size());
             String randomCommand = commandArray.get(randIndex).toString();
             commandStack.push(randomCommand);
-            System.out.println("Issued command: " + randomCommand);
+            System.out.println();
+            System.out.println("[Command ISSUED]: General Cavazos orders the troops to do: " + randomCommand);
+            System.out.println();
         } else {
             System.out.println("No commands available.");
         }
     }
     
-
+    //display list of all commands
     public static void listAllCommands() {
         if (commandArray != null && commandArray.size() > 0) {
             System.out.println("----- List of all commands -----");
@@ -60,29 +63,35 @@ public class App {
         }
     }
 
+    //Undo a command
     public static void undoCommand(Stack<String> commandStack, Stack<String> redoStack) {
         if (!commandStack.isEmpty()) {
             String undoneCommand = commandStack.pop();
             redoStack.push(undoneCommand);
-            System.out.println("Undone Command: " + undoneCommand);
+            System.out.println();
+            System.out.println("[UNDO COMMAND ISSUED]: General Cavazos orders the troops to undo: " + undoneCommand);
+            System.out.println();
         } else {
-            System.out.println("No command to undo.");
+            System.out.println("[ERROR] No command to undo. Please issue a comand.");
         }
     }
 
+    //redo a command
     public static void redoCommand(Stack<String> commandStack, Stack<String> redoStack) {
         if (!redoStack.isEmpty()) {
-            String redoneCommand = redoStack.pop();
-            commandStack.push(redoneCommand);
-            System.out.println("Redone Command: " + redoneCommand);
+            String redoCommand = redoStack.pop();
+            commandStack.push(redoCommand);
+            System.out.println();
+            System.out.println("[REDO COMMAND ISSUED]: General Cavazos orders the troops to redo: " + redoCommand);
+            System.out.println();
         } else {
-            System.out.println("No commands to redo.");
+            System.out.println("[ERROR]No commands to redo. Please Issue a Comand.");
         }
     }
 
     public static void main(String[] args) {
 
-        
+        //Json file
         String fileName = "/Users/bryanheraz/Documents/GitHub/General-Cavazos-Commander-App/src/generalcavazoscommanderapp/src/main/java/com/cavazos/homework/commands.json";
         
         commandArray = JSONFile.readArray(fileName);
@@ -94,12 +103,13 @@ public class App {
 
         Character command = '_';
 
+
         while (command != 'q') {
             printMenu();
             System.out.print("Enter a command: ");
-            System.out.println();
             command = menuGetCommand(scanner);
 
+            //shows the options of commands we have t=for this app
             switch (command) {
                 case 'i':
                     issueCommand(commandStack);
@@ -117,7 +127,7 @@ public class App {
                     System.out.println("Goodbye:)");
                     break;
                 default:
-                    System.out.println("Invalid Command. Please Try again");
+                    System.out.println("[ERROR] Invalid Input, Unknown Command.");
             }
         }
         scanner.close();
