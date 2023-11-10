@@ -73,7 +73,7 @@ public class App {
 
         while (command != 'q'){
          printMenu();
-            System.out.print("Enter a command");
+            System.out.print("Enter a command: ");
             command = menuGetCommand(scanner);
 
             switch (command){
@@ -81,10 +81,10 @@ public class App {
                     issueCommad(commandStack);
                     break;
                 case 'l':
-                     //
+                     listALLCommands();
                     break;
                 case 'u':
-                    //
+                    undoCommand(commandStack, redoStack);
                     break;
                 case 'r':
                     //
