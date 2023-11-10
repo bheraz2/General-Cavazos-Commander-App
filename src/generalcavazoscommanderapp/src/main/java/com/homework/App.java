@@ -3,9 +3,11 @@ package com.homework;
 import java.util.Scanner;
 import java.util.Stack;
 
+import com.google.gson.JsonArray;
+
 public class App {
 
-   private static JSONArray commandJSONArray;
+   private static JsonArray commandJSONArray;
 
    public static void printMenu(){
     System.out.println("----------------------------------------------------------");
