@@ -29,7 +29,7 @@ public class App {
         System.out.printf("%s\t%s\n", command, desc);
     }
 
-    public static char menuGetCommand(Scanner scamner){
+    public static char menuGetCommand(Scanner scanner){
         String input = scanner.nextLine().toLowerCase();
         if(!input.isEmpty()){
             return input.charAt(0);
@@ -49,6 +49,17 @@ public class App {
         System.out.println("----- List of all commands -----");
         System.out.println(commandJSONArray);
     }
+
+    public static void undoCommand(Stack<String> commandStack, Stack<String> redoStack){
+        if (!commandStack.isEmpty()){
+            String undoneCommand = commandStack.pop();
+            redoStack.push(undoneCommand);
+            System.out.println("Undone Command: " + undoneCommand);
+            }else {
+                System.out.println("No command to undo.");
+            }
+        }
+    
      public static void main(String[] args){
     
         String fileName = "/Users/jerom/Documents/GitHub/class-java/general-cavazos/undoredo/src/main/java/com/cavazos/commands.json";
